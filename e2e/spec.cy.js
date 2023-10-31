@@ -82,3 +82,22 @@ describe("Regular search", () => {
 	})
 })
 
+describe("I'm feeling lucky search", () => {
+	it('Perform search', () => {
+		// visit google.com
+		cy.visit('https://google.com')
+		// accept cookis
+		cy.acceptCookies()
+		// type search term to first text area
+		cy.get("textarea").first().type("Cypress E2E testing")
+		// check if the textarea has the correct value
+		cy.get("textarea").first().should("have.value", "Cypress E2E testing")
+		// wait a bit to avoid multi-line input
+		cy.wait(500)
+		// press move to I'm feeling lucky button
+		cy.get("input[type=submit]").siblings().eq(1).click()
+		// let's make sure we're not on Google
+		cy.title().should('not.include', 'Google')
+	})
+})
+
